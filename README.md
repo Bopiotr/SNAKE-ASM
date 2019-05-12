@@ -1,5 +1,5 @@
 # SNAKE
-Game snake creted on DOSBox 0.74-2 using assembly language
+Snake Game creted on DOSBox 0.74-2 using assembly language
 
 ## Genral info
 
