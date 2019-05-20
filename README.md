@@ -12,3 +12,6 @@ Project is created with:
 
 ## Setup
 Project run on DOSBox 0.74-2
+
+## Result
+![Zrzut ekranu (10)](https://user-images.githubusercontent.com/44877084/58044273-a8672980-7b3f-11e9-8ca1-aff0169bd8c4.png)
