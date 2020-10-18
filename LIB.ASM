@@ -35,10 +35,10 @@ draw_dot:			;rusuje piksel, w di i si wspolrzedne piksela w bl kolor
 	push 	ax
 	push 	di
 	push 	es
-	mov 	ax,320 ;obliczanie numeru piksela
+	mov 	ax,320 		;obliczanie numeru piksela
 	mul 	si		;pierw wsp Y*320
 
-	add 	di,ax	;dodanie Y*320 do X, daje nam numer piksela
+	add 	di,ax		;dodanie Y*320 do X, daje nam numer piksela
 
 	mov 	ax,0a000h
 	mov 	es,ax
@@ -61,26 +61,26 @@ delay:
 	popa
 ret
 
-follow: 	;cx rejetr wynikowy
+follow: 			;cx rejetr wynikowy
 	push 	ax
 	push 	di
 	push 	es
 
-	mov 	ax,320  ;obliczanie numeru piksela
+	mov 	ax,320  	;obliczanie numeru piksela
 	mul 	si		;pierw wsp Y*320
 
-	add 	di,ax	;dodanie Y*320 do X, daje nam numer piksela
+	add 	di,ax		;dodanie Y*320 do X, daje nam numer piksela
 
 
-	sub 	di,320	;piksel z gory
+	sub 	di,320		;piksel z gory
 	mov 	ax,0a000h
 	mov 	es,ax
 	mov 	cx,1 		 
 	cmp 	byte[es:di],15
-	je 		ef
+	je 	ef
 	add 	di,320
 
-	add 	di,320	;piksel z dolu
+	add 	di,320		;piksel z dolu
 	mov 	ax,0a000h
 	mov 	es,ax
 	mov 	cx,3 		 
@@ -91,9 +91,9 @@ follow: 	;cx rejetr wynikowy
 	inc 	di		; piksel z prawej
 	mov 	cx, 2
 	cmp 	byte[es:di],15
-	je 		ef
+	je 	ef
 
-	sub 	di,2    ; piksel z lewej
+	sub 	di,2    	; piksel z lewej
 	mov 	cx,4
 	cmp 	byte[es:di],15
 	je 	ef
@@ -108,31 +108,31 @@ ret
 fflush:	
 	push	ax
 	push	es
-	mov		ax, 0000h
-	mov		es, ax
+	mov	ax, 0000h
+	mov	es, ax
 
-	mov		word[es:041ah], 041eh
-	mov		word[es:041ch], 041eh				; Clears keyboard buffer
-	pop		es
-	pop		ax
+	mov	word[es:041ah], 041eh
+	mov	word[es:041ch], 041eh	; Clears keyboard buffer
+	pop	es
+	pop	ax
 ret
 
 IS_END:
 	push 	di
 	push 	es
 	push 	ax
-	mov 	ax,320  ;obliczanie numeru piksela
+	mov 	ax,320  	;obliczanie numeru piksela
 	mul 	si		;pierw wsp Y*320
-	add 	di,ax	;dodanie Y*320 do X, daje nam numer piksela
+	add 	di,ax		;dodanie Y*320 do X, daje nam numer piksela
 	mov 	ax,0a000h
 	mov 	es,ax
 
 	cmp 	byte[es:di],5
-	jb		C1
-	xor 	ax,ax	; ustawia Z = 1
+	jb	C1
+	xor 	ax,ax		; ustawia Z = 1
 	jmp 	IS_END_E
 C1:
-	add 	ax,10	; ustawia Z = 0
+	add 	ax,10		; ustawia Z = 0
 IS_END_E:
 	pop 	ax
 	pop 	es
@@ -144,29 +144,29 @@ NEW_QUAD:
 	push	di
 	push	si
 	
-	mov		di,word[kwadrat]
-	mov		si,word[kwadrat+2]
-	mov		bl,0
+	mov	di,word[kwadrat]
+	mov	si,word[kwadrat+2]
+	mov	bl,0
 	call	DRAW_QUAD
 RANDOM:	
-	call	RAND				; losuje dwie wspolrzedne, trafiaja do di i si
+	call	RAND		; losuje dwie wspolrzedne, trafiaja do di i si
 	
-	mov		bl,3
+	mov	bl,3
 	call	DRAW_QUAD
 	
-	mov		word[kwadrat],di
-	mov		word[kwadrat+2],si
+	mov	word[kwadrat],di
+	mov	word[kwadrat+2],si
 END_NEW_QUAD:
-	pop		si
-	pop		di
-	pop		bx
+	pop	si
+	pop	di
+	pop	bx
 ret
 
 DRAW_QUAD:
 	push	cx
 	push	di
 	push	si
-	mov		cx,3
+	mov	cx,3
 DRAW_1:
 	push 	cx
 	push 	di
@@ -176,13 +176,13 @@ DRAW_2:
 	inc 	di
 	loop 	DRAW_2
 	
-	pop		di
+	pop	di
 	inc 	si
-	pop		cx
+	pop	cx
 	loop	DRAW_1
 END_DRAW_QUAD:
-	pop		si
-	pop		di
+	pop	si
+	pop	di
 	pop 	cx
 ret
 
@@ -196,76 +196,76 @@ RAND:
 	int 	1ah
 	
 	mov 	ax,dx
-	xor		dx,dx
+	xor	dx,dx
 	mov 	cx,313 
 	div 	cx
 	mov 	di,dx
-	add		di,2
+	add	di,2
 	
 	mov 	ah, 00h  ; interrupts to get system time        
 	int 	1ah
 	
 	mov 	ax,dx
 	mov 	cx,193
-	xor		dx,dx
+	xor	dx,dx
 	div 	cx
 	mov 	si,dx
-	add		si,2
+	add	si,2
 		
 IS_EMPTY_SPACE:	
 	push	si
 	push	di
 	
-	mov 	ax,320  ;obliczanie numeru piksela
+	mov 	ax,320  	;obliczanie numeru piksela
 	mul 	si		;pierw wsp Y*320
-	add 	di,ax	;dodanie Y*320 do X, daje nam numer piksela
+	add 	di,ax		;dodanie Y*320 do X, daje nam numer piksela
 	mov 	ax,0a000h
 	mov 	es,ax
 	
-	mov		cx,3 	; licznik loop EMPTY_1
+	mov	cx,3 		; licznik loop EMPTY_1
 EMPTY_1:
 	push 	cx
 	push	di
-	mov		cx,3    ; licznik loop EMPTY_2
+	mov	cx,3    	; licznik loop EMPTY_2
 EMPTY_2:
 	cmp 	byte[es:di],0
-	jne		REPEAT	
+	jne	REPEAT	
 	inc 	di
 	loop 	EMPTY_2
 	
-	pop		di
+	pop	di
 	pop 	cx
-	add		di,320	
+	add	di,320	
 	loop	EMPTY_1
-	jmp		END_RAND
+	jmp	END_RAND
 REPEAT:
-	pop		di
+	pop	di
 	pop 	cx
-	pop		di
-	pop		si
-	pop		cx
-	pop		ax
+	pop	di
+	pop	si
+	pop	cx
+	pop	ax
 	jmp 	RAND
 END_RAND:
-	pop		di
-	pop		si
-	pop		cx
-	pop		ax
+	pop	di
+	pop	si
+	pop	cx
+	pop	ax
 ret
 
 CHECKING_POINT:
 	push 	di
 	push 	es
 	push 	ax
-	mov 	ax,320  ;obliczanie numeru piksela
+	mov 	ax,320  	;obliczanie numeru piksela
 	mul 	si		;pierw wsp Y*320
-	add 	di,ax	;dodanie Y*320 do X, daje nam numer piksela
+	add 	di,ax		;dodanie Y*320 do X, daje nam numer piksela
 	mov 	ax,0a000h
 	mov 	es,ax
 
 	cmp 	byte[es:di],3
 	jne 	END_CHECKING_POINT
-	add		word[addsize],5
+	add	word[addsize],5
 	call	NEW_QUAD
 	
 END_CHECKING_POINT:
